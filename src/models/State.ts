@@ -26,7 +26,7 @@ class State {
     return this.actors.find((a) => a.type == "player") as Player;
   }
 
-  update(time: number, keys: any[]): State {
+  update(time: number, keys: Record<string, boolean>): State {
     let actors: IActor[] = this.actors.map((actor: IActor) =>
       actor.update(time, this, keys)
     );

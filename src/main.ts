@@ -1,12 +1,12 @@
 import "./style.css";
 import { Level } from "./models/Level/Level";
 import { State } from "./models/State";
-import simpleLevelPlan from "./simplePlan";
+import gameLevels from "./gameLevels";
 import DOMDisplay from "./DOMDisplay";
 
-function trackKeys(keys: any[]) {
+function trackKeys(keys: string[]) {
   let down = Object.create(null);
-  function track(event: any) {
+  function track(event: KeyboardEvent) {
     if (keys.includes(event.key)) {
       down[event.key] = event.type == "keydown";
       event.preventDefault();
@@ -19,7 +19,7 @@ function trackKeys(keys: any[]) {
 
 const arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
 
-function runAnimation(frameFunc: any) {
+function runAnimation(frameFunc: (time: number) => boolean) {
   let lastTime: number | null = null;
   function frame(time: number) {
     if (lastTime != null) {
@@ -54,7 +54,7 @@ function runLevel(level: Level, Display = DOMDisplay) {
   });
 }
 
-async function runGame(plans = [simpleLevelPlan], Display = DOMDisplay) {
+async function runGame(plans: string[], Display = DOMDisplay) {
   for (let level = 0; level < plans.length; ) {
     let status = await runLevel(Level.create(plans[level]), Display);
     if (status == "won") level++;
@@ -62,4 +62,4 @@ async function runGame(plans = [simpleLevelPlan], Display = DOMDisplay) {
   console.log("You've won!");
 }
 
-runGame([simpleLevelPlan], DOMDisplay);
+runGame(gameLevels, DOMDisplay);

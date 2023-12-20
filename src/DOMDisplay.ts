@@ -7,7 +7,7 @@ const scale = 20;
 function elt(
   name: string,
   attrs: Record<string, string>,
-  ...children: any[]
+  ...children: HTMLElement[]
 ): HTMLElement {
   let dom = document.createElement(name);
   for (let attr of Object.keys(attrs)) {

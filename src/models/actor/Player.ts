@@ -23,7 +23,7 @@ class Player extends BaseClass implements IActor {
     return state;
   }
 
-  update(time: number, state: State, keys: any) {
+  update(time: number, state: State, keys: Record<string, boolean>) {
     let xSpeed = 0;
     if (keys.ArrowLeft) xSpeed -= playerXSpeed;
     if (keys.ArrowRight) xSpeed += playerXSpeed;
