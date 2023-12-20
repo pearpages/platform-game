@@ -1,12 +1,14 @@
+import { State } from "../State";
 import { Vec } from "../Vec";
 import { type IActor } from "./Actor";
 
-// const wobbleSpeed = 8;
-//  const wobbleDist = 0.07;
+const wobbleSpeed = 8;
+const wobbleDist = 0.07;
 
 interface ICoin extends IActor {
   basePos: Vec;
   wobble: number;
+  collide: (state: State) => State;
 }
 
 const type = "coin";
@@ -17,6 +19,23 @@ const create = (pos: Vec): ICoin => {
   return createCoin(basePos, basePos, Math.random() * Math.PI * 2);
 };
 
+function collide(coin: ICoin, state: State): State {
+  let filtered = state.actors.filter((a) => a != coin);
+  let status = state.status;
+  if (!filtered.some((a) => a.type == "coin")) status = "won";
+  return new State(state.level, filtered, status);
+}
+
+function update(coin: ICoin, time: number) {
+  let wobble = coin.wobble + time * wobbleSpeed;
+  let wobblePos = Math.sin(wobble) * wobbleDist;
+  return createCoin(
+    coin.basePos.plus(Vec.create(0, wobblePos)),
+    coin.basePos,
+    wobble
+  );
+}
+
 function createCoin(pos: Vec, basePos: Vec, wobble: number): ICoin {
   return {
     pos,
@@ -25,26 +44,14 @@ function createCoin(pos: Vec, basePos: Vec, wobble: number): ICoin {
     type,
     size,
     create,
+    collide(state: State) {
+      return collide(this, state);
+    },
+    update(time: number) {
+      return update(this, time);
+    },
   };
 }
 
-// (Coin.prototype as any).collide = function (state: State) {
-//   let filtered = state.actors.filter((a) => a != this);
-//   let status: any = state.status;
-//   if (!filtered.some((a) => a.type == "coin")) status = "won";
-//   return createState(state.level, filtered, status);
-// };
-
-// (Coin.prototype as any).update = function (time: any) {
-//   let wobble = this.wobble + time * wobbleSpeed;
-//   let wobblePos = Math.sin(wobble) * wobbleDist;
-//   return new Coin(
-//     this.basePos.plus(createVec(0, wobblePos)),
-//     this.basePos,
-//     wobble
-//   );
-// };
-
 const Coin = create(Vec.create(0, 0));
 export { Coin };
-export type { ICoin };

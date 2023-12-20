@@ -1,22 +1,7 @@
-import { ActorLavaChar, type Char, type Plan } from "./Plan";
+import { type Char, type Plan } from "./Plan";
 import { type IActor } from "./actor";
 import { Vec } from "./Vec";
-import { Coin } from "./actor/Coin";
-import { Lava } from "./actor/Lava";
-import { Player } from "./actor/Player";
-
-function createActor(ch: Char, pos: Vec): IActor {
-  switch (ch) {
-    case "o":
-      return Coin.create(pos);
-    case "@":
-      return Player.create(pos);
-    default:
-      return Lava.create(pos, ch as ActorLavaChar);
-  }
-}
-
-type StaticMapElement = "lava" | "empty" | "wall";
+import { type StaticMapElement, createActor } from "./createActor";
 
 class Level {
   height: number;
@@ -47,29 +32,25 @@ class Level {
     });
   }
 
+  touches(pos: Vec, size: Vec, type: string): boolean {
+    let xStart = Math.floor(pos.x);
+    let xEnd = Math.ceil(pos.x + size.x);
+    let yStart = Math.floor(pos.y);
+    let yEnd = Math.ceil(pos.y + size.y);
+
+    for (let y = yStart; y < yEnd; y++) {
+      for (let x = xStart; x < xEnd; x++) {
+        let isOutside = x < 0 || x >= this.width || y < 0 || y >= this.height;
+        let here = isOutside ? "wall" : this.rows[y][x];
+        if (here == type) return true;
+      }
+    }
+    return false;
+  }
+
   static create(plan: Plan): Level {
     return new Level(plan);
   }
 }
-
-// (Level.prototype as any).touches = function (
-//   pos: Vec,
-//   size: Vec,
-//   type: string
-// ) {
-//   let xStart = Math.floor(pos.x);
-//   let xEnd = Math.ceil(pos.x + size.x);
-//   let yStart = Math.floor(pos.y);
-//   let yEnd = Math.ceil(pos.y + size.y);
-
-//   for (let y = yStart; y < yEnd; y++) {
-//     for (let x = xStart; x < xEnd; x++) {
-//       let isOutside = x < 0 || x >= this.width || y < 0 || y >= this.height;
-//       let here = isOutside ? "wall" : this.rows[y][x];
-//       if (here == type) return true;
-//     }
-//   }
-//   return false;
-// };
 
 export { Level };
