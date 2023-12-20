@@ -1,6 +1,6 @@
-import type { Level } from "./Level";
-import { type IActor } from "./actor";
-import { type IPlayer } from "./actor/Player";
+import type { Level } from "./Level/Level";
+import { type IActor } from "./actor/IActor";
+import { Player } from "./actor/Player";
 
 function overlap(actor1: IActor, actor2: IActor): boolean {
   return (
@@ -22,8 +22,8 @@ class State {
     this.status = status;
   }
 
-  get player(): IPlayer {
-    return this.actors.find((a) => a.type == "player") as IPlayer;
+  get player(): Player {
+    return this.actors.find((a) => a.type == "player") as Player;
   }
 
   update(time: number, keys: any[]): State {
@@ -36,7 +36,7 @@ class State {
       return newState;
     }
 
-    let player = newState.player as IPlayer;
+    let player = newState.player as Player;
     if (this.level.touches(player.pos, player.size, "lava")) {
       return new State(this.level, actors, "lost");
     }

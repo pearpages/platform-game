@@ -1,6 +1,6 @@
 import { State } from "./models/State";
-import { Level } from "./models/Level";
-import { IActor } from "./models/actor";
+import { Level } from "./models/Level/Level";
+import { IActor } from "./models/actor/IActor";
 
 const scale = 20;
 

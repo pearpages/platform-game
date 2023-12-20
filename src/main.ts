@@ -1,5 +1,5 @@
 import "./style.css";
-import { Level } from "./models/Level";
+import { Level } from "./models/Level/Level";
 import { State } from "./models/State";
 import simpleLevelPlan from "./simplePlan";
 import DOMDisplay from "./DOMDisplay";

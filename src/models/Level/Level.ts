@@ -1,6 +1,6 @@
 import { type Char, type Plan } from "./Plan";
-import { type IActor } from "./actor";
-import { Vec } from "./Vec";
+import { type IActor } from "../actor/IActor";
+import { Vec } from "../Vec";
 import { type StaticMapElement, createActor } from "./createActor";
 
 class Level {
@@ -26,7 +26,9 @@ class Level {
             ch
           ] as StaticMapElement;
         }
-        this.startActors.push(createActor(ch as Char, Vec.create(x, y)));
+        this.startActors.push(
+          createActor(ch as Char).create(Vec.create(x, y), ch as Char)
+        );
         return "empty";
       });
     });

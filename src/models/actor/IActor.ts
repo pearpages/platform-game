@@ -2,8 +2,8 @@ import { State } from "../State";
 import { Vec } from "../Vec";
 
 interface IActor {
-  create: (pos: Vec) => this;
-  update: (time: number, state: State, keys?: any) => this;
+  update(time: number, state: State, keys?: any): IActor;
+  collide(state: State): State;
   pos: Vec;
   size: Vec;
   type: string;

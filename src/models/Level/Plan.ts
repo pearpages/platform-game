@@ -10,20 +10,7 @@ type HorizontalLavaChar = "=";
 type VerticalLavaChar = "|";
 type DrippingLavaChar = "v";
 
-type Char =
-  | StaticEmptyChar
-  | StaticWallChar
-  | StaticLavaChar
-  | ActorCoinChar
-  | ActorLavaChar
-  | ActorPlayerChar;
+type Char = StaticMapElement | ActorCoinChar | ActorLavaChar | ActorPlayerChar;
 type StaticMapElement = StaticLavaChar | StaticWallChar | StaticEmptyChar;
 
-export type {
-  StaticMapElement,
-  Plan,
-  ActorLavaChar,
-  Char,
-  ActorPlayerChar,
-  ActorCoinChar,
-};
+export type { Char, Plan, ActorLavaChar };
