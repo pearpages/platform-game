@@ -24,7 +24,7 @@ class Player extends BaseClass implements IActor {
     return state;
   }
 
-  update(time: number, state: State, keys: IKeys) {
+  update(time: number, state: State, keys: Partial<IKeys>) {
     let xSpeed = 0;
     if (keys.left) xSpeed -= playerXSpeed;
     if (keys.right) xSpeed += playerXSpeed;

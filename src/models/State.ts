@@ -27,7 +27,7 @@ class State {
     return this.actors.find((a) => a.type == "player") as Player;
   }
 
-  update(time: number, keys: IKeys): State {
+  update(time: number, keys: Partial<IKeys>): State {
     let actors: IActor[] = this.actors.map((actor: IActor) =>
       actor.update(time, this, keys)
     );
