@@ -4,6 +4,7 @@ import { State } from "./models/State";
 import gameLevels from "./gameLevels";
 import DOMDisplay from "./DOMDisplay";
 import { pressedKeys } from "./getKeys";
+import { manageLevelErrors, getQueryParam } from "./getInitialLevelInput";
 
 function runAnimation(frameFunc: (time: number) => boolean) {
   let lastTime: number | null = null;
@@ -44,7 +45,12 @@ function runLevel(
 }
 
 async function runGame(plans: string[], Display = DOMDisplay): Promise<void> {
-  for (let level = 0; level < plans.length; ) {
+  const initialLevel = manageLevelErrors(
+    Number(getQueryParam("level")),
+    plans.length - 1
+  );
+
+  for (let level = initialLevel; level < plans.length; ) {
     let status = await runLevel(Level.create(plans[level]), Display);
     if (status == "won") level++;
   }
