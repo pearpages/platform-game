@@ -1,6 +1,14 @@
 body {
   margin: 0;
 }
+#author {
+  display: flex;
+  max-width: 600px;
+  justify-content: space-between;
+}
+#author div {
+  padding: 0 6px;
+}
 #counters {
   display: flex;
   position: absolute;

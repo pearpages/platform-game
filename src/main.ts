@@ -8,6 +8,10 @@ import { manageLevelErrors, getQueryParam } from "./getInitialLevelInput";
 import config from "./config";
 import { watch } from "./Watch";
 import { lives } from "./Lives";
+import packageJson from "../package.json";
+
+const { version } = packageJson;
+document.getElementById("version-tag")!.innerHTML = version;
 
 function runAnimation(frameFunc: (time: number) => boolean) {
   let lastTime: number | null = null;
