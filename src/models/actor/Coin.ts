@@ -15,7 +15,7 @@ class Coin extends BaseClass implements IActor {
   basePos: Vec;
   wobble: number;
 
-  constructor(pos: Vec, basePos: Vec, wobble: number) {
+  private constructor(pos: Vec, basePos: Vec, wobble: number) {
     super();
     this.pos = pos;
     this.basePos = basePos;

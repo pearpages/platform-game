@@ -6,7 +6,7 @@ import { Player } from "../actor/Player";
 import { type IActor } from "../actor/IActor";
 
 interface IWithActorCreate {
-  new (...args: any[]): IActor;
+  // new (...args: any[]): IActor; // In case we also want that _new_ to be public
   create(pos: Vec, ch?: Char): IActor;
 }
 

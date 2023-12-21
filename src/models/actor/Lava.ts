@@ -13,7 +13,7 @@ class Lava extends BaseClass implements IActor {
   speed: Vec;
   reset?: Vec;
 
-  constructor(pos: Vec, speed: Vec, reset?: Vec) {
+  private constructor(pos: Vec, speed: Vec, reset?: Vec) {
     super();
     this.pos = pos;
     this.speed = speed;

@@ -15,7 +15,8 @@ class BaseClass {
 class Player extends BaseClass implements IActor {
   pos: Vec;
   speed: Vec;
-  constructor(pos: Vec, speed: Vec) {
+
+  private constructor(pos: Vec, speed: Vec) {
     super();
     this.pos = pos;
     this.speed = speed;
