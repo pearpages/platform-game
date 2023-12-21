@@ -15,3 +15,5 @@ npm init vite@latest your-project-name -- --template vanilla-ts
 ## Deployment
 
 In github pages. Main branch under `/docs` folder.
+
+[Live site](https://pages.ninja/platform-game/)
