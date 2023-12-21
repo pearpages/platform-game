@@ -31,6 +31,7 @@
 }
 .game {
   overflow: hidden;
+  /* visible world to the Player */
   max-width: 600px;
   max-height: 450px;
   position: relative;

@@ -5,7 +5,7 @@ import config from "./config";
 
 const { scale } = config;
 
-function elt(
+function createHTMLElement(
   name: string,
   attrs: Record<string, string>,
   ...children: HTMLElement[]
@@ -21,28 +21,28 @@ function elt(
 }
 
 function drawGrid(level: Level): HTMLElement {
-  return elt(
+  return createHTMLElement(
     "table",
     {
       class: "background",
       style: `width: ${level.width * scale}px`,
     },
     ...level.rows.map((row) =>
-      elt(
+      createHTMLElement(
         "tr",
         { style: `height: ${scale}px` },
-        ...row.map((type) => elt("td", { class: type }))
+        ...row.map((type) => createHTMLElement("td", { class: type }))
       )
     )
   );
 }
 
 function drawActors(actors: IActor[]): HTMLElement {
-  return elt(
+  return createHTMLElement(
     "div",
     {},
     ...actors.map((actor) => {
-      let rect = elt("div", { class: `actor ${actor.type}` });
+      let rect = createHTMLElement("div", { class: `actor ${actor.type}` });
       rect.style.width = `${actor.size.x * scale}px`;
       rect.style.height = `${actor.size.y * scale}px`;
       rect.style.left = `${actor.pos.x * scale}px`;
@@ -56,7 +56,7 @@ export default class DOMDisplay {
   dom: HTMLElement;
   actorLayer: HTMLElement | null;
   constructor(parent: HTMLElement, level: Level) {
-    this.dom = elt("div", { class: "game" }, drawGrid(level));
+    this.dom = createHTMLElement("div", { class: "game" }, drawGrid(level));
     this.actorLayer = null;
     parent.appendChild(this.dom);
   }
