@@ -2,14 +2,15 @@ import { type IActor } from "./IActor";
 import { Vec } from "../Vec";
 import { State } from "../State";
 import { type IKeys } from "../IKeys";
+import config from "../../config";
 
-const playerXSpeed = 7;
-const gravity = 30;
-const jumpSpeed = 17;
+const {
+  actors: { player },
+} = config;
 
 class BaseClass {
   type = "player";
-  size = Vec.create(0.8, 1.5);
+  size = Vec.create(player.size.x, player.size.y);
 }
 
 class Player extends BaseClass implements IActor {
@@ -27,20 +28,20 @@ class Player extends BaseClass implements IActor {
 
   update(time: number, state: State, keys: Partial<IKeys>) {
     let xSpeed = 0;
-    if (keys.left) xSpeed -= playerXSpeed;
-    if (keys.right) xSpeed += playerXSpeed;
+    if (keys.left) xSpeed -= player.playerXSpeed;
+    if (keys.right) xSpeed += player.playerXSpeed;
     let pos = this.pos;
     let movedX = pos.plus(Vec.create(xSpeed * time, 0));
     if (!state.level.touches(movedX, this.size, "wall")) {
       pos = movedX;
     }
 
-    let ySpeed = this.speed.y + time * gravity;
+    let ySpeed = this.speed.y + time * player.gravity;
     let movedY = pos.plus(Vec.create(0, ySpeed * time));
     if (!state.level.touches(movedY, this.size, "wall")) {
       pos = movedY;
     } else if (keys.up && ySpeed > 0) {
-      ySpeed = -jumpSpeed;
+      ySpeed = -player.jumpSpeed;
     } else {
       ySpeed = 0;
     }

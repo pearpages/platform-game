@@ -1,13 +1,15 @@
 import { State } from "../State";
 import { Vec } from "../Vec";
 import { type IActor } from "./IActor";
+import config from "../../config";
 
-const WobbleSpeed = 8;
-const WobbleDist = 0.07;
+const {
+  actors: { coin },
+} = config;
 
 class BaseClass {
   type = "coin";
-  size = Vec.create(0.6, 0.6);
+  size = Vec.create(coin.size.x, coin.size.y);
 }
 
 class Coin extends BaseClass implements IActor {
@@ -30,8 +32,8 @@ class Coin extends BaseClass implements IActor {
   }
 
   update(time: number) {
-    let wobble = this.wobble + time * WobbleSpeed;
-    let wobblePos = Math.sin(wobble) * WobbleDist;
+    let wobble = this.wobble + time * coin.wobbleSpeed;
+    let wobblePos = Math.sin(wobble) * coin.wobbleDist;
     return new Coin(
       this.basePos.plus(Vec.create(0, wobblePos)),
       this.basePos,

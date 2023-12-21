@@ -1,8 +1,9 @@
 import { State } from "./models/State";
 import { Level } from "./models/Level/Level";
 import { IActor } from "./models/actor/IActor";
+import config from "./config";
 
-const scale = 20;
+const { scale } = config;
 
 function elt(
   name: string,

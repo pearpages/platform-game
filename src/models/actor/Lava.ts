@@ -2,9 +2,14 @@ import { Vec } from "../Vec";
 import { type ActorLavaChar } from "../Level/Plan";
 import { IActor } from "./IActor";
 import { State } from "../State";
+import config from "../../config";
+
+const {
+  actors: { lava },
+} = config;
 
 class BaseClass {
-  size = Vec.create(1, 1);
+  size = Vec.create(lava.size.x, lava.size.y);
   type = "lava";
 }
 
