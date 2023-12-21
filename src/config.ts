@@ -1,5 +1,6 @@
 export default {
   scale: 20,
+  lives: 3,
   actors: {
     coin: {
       wobbleSpeed: 8,

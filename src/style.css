@@ -1,3 +1,13 @@
+#counters {
+  display: flex;
+  max-width: 600px;
+  background: rgb(52, 166, 251);
+  color: white;
+  justify-content: space-between;
+}
+#counters div {
+  padding: 10px;
+}
 .background {
   background: rgb(52, 166, 251);
   table-layout: fixed;

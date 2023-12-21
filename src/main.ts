@@ -5,6 +5,9 @@ import gameLevels from "./gameLevels";
 import DOMDisplay from "./DOMDisplay";
 import { pressedKeys } from "./getKeys";
 import { manageLevelErrors, getQueryParam } from "./getInitialLevelInput";
+import config from "./config";
+import { watch } from "./Watch";
+import { lives } from "./Lives";
 
 function runAnimation(frameFunc: (time: number) => boolean) {
   let lastTime: number | null = null;
@@ -21,7 +24,7 @@ function runAnimation(frameFunc: (time: number) => boolean) {
 
 function runLevel(
   level: Level,
-  Display = DOMDisplay
+  Display: typeof DOMDisplay
 ): Promise<State["status"]> {
   let display = new Display(document.body, level);
   let state = State.start(level);
@@ -44,17 +47,39 @@ function runLevel(
   });
 }
 
-async function runGame(plans: string[], Display = DOMDisplay): Promise<void> {
+async function runGame(
+  plans: string[],
+  Display: typeof DOMDisplay
+): Promise<void> {
+  const gameState = {
+    lives: config.lives,
+    level: 0,
+  };
+
   const initialLevel = manageLevelErrors(
     Number(getQueryParam("level")),
     plans.length - 1
   );
 
-  for (let level = initialLevel; level < plans.length; ) {
-    let status = await runLevel(Level.create(plans[level]), Display);
-    if (status == "won") level++;
+  watch.init();
+  lives.init(String(config.lives));
+
+  for (gameState.level = initialLevel; gameState.level < plans.length; ) {
+    let status = await runLevel(Level.create(plans[gameState.level]), Display);
+    if (status == "won") {
+      gameState.level++;
+    } else if (status == "lost" && gameState.lives > 1) {
+      gameState.lives -= 1;
+      lives.update(String(gameState.lives));
+    } else {
+      gameState.lives = config.lives;
+      gameState.level = 0;
+      lives.update(String(gameState.lives));
+      alert("You've lost! Start over! :(");
+      watch.reset();
+    }
   }
-  console.log("You've won!");
+  alert("You've won!");
 }
 
 runGame(gameLevels, DOMDisplay);
