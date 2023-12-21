@@ -26,7 +26,7 @@ function runLevel(
   level: Level,
   Display: typeof DOMDisplay
 ): Promise<State["status"]> {
-  let display = new Display(document.body, level);
+  let display = new Display(document.getElementById("app")!, level);
   let state = State.start(level);
   let ending = 1;
   return new Promise((resolve) => {

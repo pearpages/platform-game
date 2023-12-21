@@ -1,8 +1,12 @@
+body {
+  margin: 0;
+}
 #counters {
   display: flex;
+  position: absolute;
+  z-index: 20;
+  width: 100%;
   max-width: 600px;
-  background: rgb(52, 166, 251);
-  color: white;
   justify-content: space-between;
 }
 #counters div {
