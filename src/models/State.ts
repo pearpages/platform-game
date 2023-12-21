@@ -1,3 +1,4 @@
+import { type IKeys } from "./IKeys";
 import type { Level } from "./Level/Level";
 import { type IActor } from "./actor/IActor";
 import { Player } from "./actor/Player";
@@ -26,7 +27,7 @@ class State {
     return this.actors.find((a) => a.type == "player") as Player;
   }
 
-  update(time: number, keys: Record<string, boolean>): State {
+  update(time: number, keys: IKeys): State {
     let actors: IActor[] = this.actors.map((actor: IActor) =>
       actor.update(time, this, keys)
     );

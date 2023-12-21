@@ -1,8 +1,9 @@
+import { type IKeys } from "../IKeys";
 import { State } from "../State";
 import { Vec } from "../Vec";
 
 interface IActor {
-  update(time: number, state: State, keys?: Record<string, boolean>): IActor;
+  update(time: number, state: State, keys?: IKeys): IActor;
   collide(state: State): State;
   pos: Vec;
   size: Vec;

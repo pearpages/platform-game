@@ -1,6 +1,7 @@
 import { type IActor } from "./IActor";
 import { Vec } from "../Vec";
 import { State } from "../State";
+import { type IKeys } from "../IKeys";
 
 const playerXSpeed = 7;
 const gravity = 30;
@@ -23,10 +24,10 @@ class Player extends BaseClass implements IActor {
     return state;
   }
 
-  update(time: number, state: State, keys: Record<string, boolean>) {
+  update(time: number, state: State, keys: IKeys) {
     let xSpeed = 0;
-    if (keys.ArrowLeft) xSpeed -= playerXSpeed;
-    if (keys.ArrowRight) xSpeed += playerXSpeed;
+    if (keys.left) xSpeed -= playerXSpeed;
+    if (keys.right) xSpeed += playerXSpeed;
     let pos = this.pos;
     let movedX = pos.plus(Vec.create(xSpeed * time, 0));
     if (!state.level.touches(movedX, this.size, "wall")) {
@@ -37,7 +38,7 @@ class Player extends BaseClass implements IActor {
     let movedY = pos.plus(Vec.create(0, ySpeed * time));
     if (!state.level.touches(movedY, this.size, "wall")) {
       pos = movedY;
-    } else if (keys.ArrowUp && ySpeed > 0) {
+    } else if (keys.up && ySpeed > 0) {
       ySpeed = -jumpSpeed;
     } else {
       ySpeed = 0;
